@@ -46,7 +46,7 @@ class ps5:
 		count = 0
 		while True:
 			count = count + 1
-			time.sleep(5)
+			time.sleep(60)
 			r = requests.get('https://la3eb.com/en-sa/playstation-5-digital-with-black-dualsense-p-CFI-1116B-ZCT1BLK')
 			soup = BeautifulSoup(r.text , 'lxml')
 			a = soup.find("button" , class_="btn Product_addToButton__3IXtt")
