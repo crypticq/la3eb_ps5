@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 import argparse
 import time
 import pyfiglet
+import smtplib
+from email.mime.text import MIMEText
+
 
 banner = pyfiglet.figlet_format("PS5 Checker  ")
 print(banner)
@@ -25,13 +28,13 @@ class ps5:
 
 	def sendmail(self):
 		s = smtplib.SMTP('smtp-mail.outlook.com' , 587)
-		s.connect(self.service , self.port)
+		s.connect('smtp-mail.outlook.com' , 587)
 		s.ehlo()
 		s.starttls()
 		s.ehlo()
 		s.set_debuglevel(1)
 		msg = MIMEText("""body""")
-		sender = my_email
+		sender = self.email
 		recipients = self.person
 		msg['Subject'] = "PS5 is avalible !!!! ,,,,  at https://la3eb.com/en-sa/playstation-5-digital-with-black-dualsense-p-CFI-1116B-ZCT1BLK"
 		msg['From'] = sender
@@ -43,7 +46,7 @@ class ps5:
 		count = 0
 		while True:
 			count = count + 1
-			time.sleep(60)
+			time.sleep(5)
 			r = requests.get('https://la3eb.com/en-sa/playstation-5-digital-with-black-dualsense-p-CFI-1116B-ZCT1BLK')
 			soup = BeautifulSoup(r.text , 'lxml')
 			a = soup.find("button" , class_="btn Product_addToButton__3IXtt")
@@ -53,10 +56,11 @@ class ps5:
 				print(count)
 
 				print(f"[*] Reason ... {a.text} [*]")
+				#self.sendmail()
 
 			else:
 				print('Yyyyyyyyyyo its now avalible')
-				sendmail()
+				self.sendmail()
 
 def get_args():
 	parser = argparse.ArgumentParser(description='la3eb ps5 Checker ..')
